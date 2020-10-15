@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AUTH_TOKEN } from '../constants'
-
+import {useHistory} from 'react-router-dom'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -9,6 +9,8 @@ export default function Login() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const history = useHistory()
 
   const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!, $name: String!) {
@@ -27,9 +29,11 @@ export default function Login() {
 `
 
   const _confirm = async () => {
-    const { token } = login ? data.login : data.signup
-    this._saveUserData(token)
-    this.props.history.push(`/`)
+    const { token } = login ? LOGIN_MUTATION : SIGNUP_MUTATION
+    _saveUserData(token)
+    console.log(login)
+    
+    history.push(`/`)
   }
 
   const _saveUserData = token => {

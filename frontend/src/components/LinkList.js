@@ -9,9 +9,18 @@ export default function LinkList() {
     feed {
       links {
         id
-       
+        createdAt
         url
         description
+        postedBy {
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
       }
     }
   }
@@ -22,13 +31,17 @@ export default function LinkList() {
       {({ loading, error, data }) => {
         if (loading) return <div>Fetching</div>
         if (error) return <div>Error</div>
-  
+
         const linksToRender = data.feed.links
-  console.log(linksToRender)
+        console.log(linksToRender)
+        //const {0:{postedBy}} = linksToRender
+        //console.log(postedBy)
         return (
           <div>
-            {linksToRender.map(link => <Link key={link.id} link={link} description={link.description} url={link.url}/>)}
-          </div>
+          {linksToRender.map((link, index, {votes}) => (
+            <Link key={link.id} url={link.url} index={index} description={link.description} postedBy={link.postedBy} createdAt={link.createdAt} length={votes.length}/>
+          ))}
+        </div>
         )
       }}
     </Query>
