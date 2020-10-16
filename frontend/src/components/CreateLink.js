@@ -4,6 +4,8 @@ import gql from 'graphql-tag'
 
 import {useHistory} from 'react-router-dom';
 
+import { FEED_QUERY } from './LinkList'
+
 export default function CreateLink() {
 
   const history = useHistory()
@@ -43,6 +45,7 @@ export default function CreateLink() {
         mutation={POST_MUTATION}
         variables={{ description, url }}
         onCompleted={()=>history.push('/')}
+       
       >
         {postMutation => <button onClick={postMutation}>Submit</button>}
       </Mutation>

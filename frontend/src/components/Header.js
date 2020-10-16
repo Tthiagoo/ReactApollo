@@ -1,9 +1,11 @@
 import React  from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+
 
 import { AUTH_TOKEN } from '../constants'
 
 export default function Header() {
+  const history = useHistory()
   
     const authToken = localStorage.getItem(AUTH_TOKEN)
     return (
@@ -28,7 +30,7 @@ export default function Header() {
               className="ml1 pointer black"
               onClick={() => {
                 localStorage.removeItem(AUTH_TOKEN)
-                this.props.history.push(`/`)
+                history.push(`/`)
               }}
             >
               logout

@@ -28,17 +28,22 @@ export default function Login() {
   }
 `
 
-  const _confirm = async () => {
-    const { token } = login ? LOGIN_MUTATION : SIGNUP_MUTATION
+const _saveUserData = token => {
+  localStorage.setItem(AUTH_TOKEN, token)
+}
+
+  const _confirm = async (data) => {
+    const { token } = login ? data.login : data.signup
+    console.debug('data login',data.login)
+    console.debug('data signup',data.signup)
     _saveUserData(token)
     console.log(login)
+    console.log(token)
     
     history.push(`/`)
   }
 
-  const _saveUserData = token => {
-    localStorage.setItem(AUTH_TOKEN, token)
-  }
+
 
 
   return (
@@ -56,7 +61,7 @@ export default function Login() {
         <input
           value={email}
           onChange={e => setEmail(e.target.value)}
-          type="text"
+          type="email"
           placeholder="Your email address"
         />
         <input
@@ -72,6 +77,7 @@ export default function Login() {
           variables={{ email, password, name }}
           onCompleted={data => _confirm(data)}
         >
+
           {mutation => (
             <div className="pointer mr2 button" onClick={mutation}>
               {login ? 'login' : 'create account'}

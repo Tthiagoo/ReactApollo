@@ -3,7 +3,12 @@ import Link from './Link'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
+export const FEED_QUERY = "feed query"
+
 export default function LinkList() {
+
+
+
   const FEED_QUERY = gql`
   {
     feed {
@@ -38,10 +43,18 @@ export default function LinkList() {
         //console.log(postedBy)
         return (
           <div>
-          {linksToRender.map((link, index, {votes}) => (
-            <Link key={link.id} url={link.url} index={index} description={link.description} postedBy={link.postedBy} createdAt={link.createdAt} length={votes.length}/>
-          ))}
-        </div>
+            {linksToRender.map((link, index) => (
+              <Link key={link.id}
+                linkId={link.id}
+                url={link.url}
+                index={index}
+                description={link.description}
+                postedBy={link.postedBy}
+                createdAt={link.createdAt}
+                length={link.votes.length} 
+                />
+            ))}
+          </div>
         )
       }}
     </Query>
